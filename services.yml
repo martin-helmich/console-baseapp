@@ -1,0 +1,23 @@
+services:
+  # Configuration management
+  config_locator:
+    class: Symfony\Component\Config\FileLocator
+    arguments:
+      - ['%dir.cwd%', '%dir.application_root%']
+  config_loader_resolver:
+    class: Symfony\Component\Config\Loader\LoaderResolver
+    arguments:
+      - [@config_yaml_loader]
+  config_loader:
+    class: Symfony\Component\Config\Loader\DelegatingLoader
+    arguments: [@config_loader_resolver]
+  config_processor:
+    class: Symfony\Component\Config\Definition\Processor
+  yaml_parser:
+    class: Symfony\Component\Yaml\Parser
+
+  # Tool classes
+  symfony_finder:
+    class: Symfony\Component\Finder\Finder
+  dispatcher:
+    synthetic: true
