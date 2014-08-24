@@ -1,0 +1,57 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * (C) 2014 Martin Helmich <kontakt@martin-helmich.de>
+ *
+ * For license information, view the LICENSE.md file.
+ */
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+
+const APP_NAME = 'application';
+const APP_VERSION = 'dev';
+
+if (file_exists(__DIR__ . '/vendor/autoload.php'))
+{
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+else if (file_exists(__DIR__ . '/../../autoload.php'))
+{
+    /** @noinspection PhpIncludeInspection */
+    require_once __DIR__ . '/../../autoload.php';
+}
+else
+{
+    die('Could not find an autoload.php. Did you set up all dependencies?');
+}
+
+$dispatcher = new EventDispatcher();
+
+$container = new ContainerBuilder();
+$container->setParameter('dir.cwd', getcwd());
+$container->setParameter('dir.appplication_root', __DIR__);
+$container->set('dispatcher', $dispatcher);
+
+// Register extensions as necessary.
+// $container->registerExtension(new TypoScriptParserExtension());
+
+$loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+$loader->load('services.yml');
+
+// Load definitions from extensios as necessary.
+// $container->loadFromExtension('typoscript_parser');
+
+$container->compile();
+
+$application = new Application($container);
+$application->setDispatcher($dispatcher);
+
+// Add commands as needed
+// $application->add($container->get('my_command'));
+
+$application->run();
