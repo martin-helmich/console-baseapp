@@ -1,0 +1,39 @@
+{
+    "name": "helmich/console-baseapp",
+    "description": "Base application for Symfony console applications.",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/martin-helmich",
+    "authors": [
+        {
+            "name": "Martin Helmich",
+            "email": "m.helmich@mittwald.de",
+            "role": "lead"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=5.4",
+        "symfony/console": "2.4.*",
+        "symfony/dependency-injection": "2.4.*",
+        "symfony/config": "2.4.*",
+        "symfony/yaml": "2.4.*",
+        "symfony/finder": "~2.4.0",
+        "symfony/event-dispatcher": "~2.4.0",
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.2.0"
+    },
+    "bin": [
+        "my-application"
+    ],
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {
+            "Helmich\\Application": "src/"
+        }
+    }
+}
