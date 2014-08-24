@@ -34,7 +34,7 @@ $dispatcher = new EventDispatcher();
 
 $container = new ContainerBuilder();
 $container->setParameter('dir.cwd', getcwd());
-$container->setParameter('dir.appplication_root', __DIR__);
+$container->setParameter('dir.application_root', __DIR__);
 $container->set('dispatcher', $dispatcher);
 
 // Register extensions as necessary.
